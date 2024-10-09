@@ -1,66 +1,38 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Requisitos
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+- PHP 8+
+- Composer
+- Xampp
+- Laravel
+- Ngrok (para tunelamento HTTP)
 
-## About Laravel
+## Como Rodar o Projeto
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Primeiramente você vai criar uma aplicação no mercado livre pelo seguinte link: https://developers.mercadolivre.com.br/devcenter
+Você loga e coloca as informações do seu perfil.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Na URI de Redirect é onde vamos ir pro proximo passo.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Baixar e instalar xampp caso não tenha e o ngrok (por ele que vamos ter o certificado ssl)
 
-## Learning Laravel
+instalado o xampp, você vai baixar o diretório laravel_application e coloca-lo dentro da pasta htdocs, que fica normalmente nesse caminho C:\xampp\htdocs e então dar start no apache e mysql do xampp
+feito isso vamos configurar o .env que fica dentro do laravel_application. Lá você vai colocar as informações do banco com o seu banco que você vai criar com o phpmyadmin. você só precisa mudar o nome do banco e do user que normalmente é root. A senha por padrão é vazia.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+feito isso abra o projeto no seu editor e certifique-se no terminal de estar na pasta /laravel_application/ para executar os comandos. Em seguida rode o servidor utilizando o comando php artisan serve.
+0BS:. Caso ao rodar este comando ele não conseguir subir na porta 8000 e em nenhuma outra. Vá na pasta do php que o laravel estiver utilizando. Procure pelo .ini e dentro localize variables_order="EGPCS", mude o valor para GPCS e o problema talvez seja resolvido.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+com o servidor rodando no 8000, agora você vai rodar o ngrok no prompt de comando, com o seguinte código ngrok http 8000 se tudo der certo você vai ter o URI de Redirect que vai ser o link com https
+com este link você vai copiar e colar la na URI de Redirect da Aplicação do Mercado Livre mas lembrando de no fim do link adicionar o /callback ai o outro link obrigatório não importa muito, pode botar qualquer um que ele aceite.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+feito a aplicação você vai ter o client_id e o secret, você vai copiar e colocar no .env do laravel_application. (client_id está como APP_ID no .env). Agora você vai no laravel_application/config/database.php linha 50 e 51 para botar suas informações do seu banco igual no .env.
 
-## Laravel Sponsors
+após isso, no terminal certificando que esta no laravel_application/ você vai dar Ctrl+C para parar o php artisan serve (não pare o ngrok), em seguida execute o seguinte comando: php artisan migrate e depois o php artisan serve novamente. Agora seu banco de dados está com as tabelas criadas. copie o link https do ngrok e cole na url, antes de clicar no Botão login certifique-se que o .env está com as informações corretas, o URI_REDIRECT precisa ser exatamente o mesmo colocado no mercado livre. Após isso ao clicar no botão login você deve estar logado e autenticado. Ai já tera acesso aos recursos de criar e listar produtos.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## ATENÇÃO AO CRIAR PRODUTOS
 
-### Premium Partners
+A api do mercado livre exige que siga os requisitos a risca, lembre-se de escolher a categoria sempre permitida caso esteja com dificuldade um exemplo de categoria permitida é MLB455515.
+https://api.mercadolibre.com/sites/MLB/categories aqui você pode conferir as categorias validas. Veja os atributos também, principalmente da faixa etária. Sugiro que siga o placeholder colocado.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Se a sua conta do mercado livre não tiver um endereço ele também dará erro. Certifique-se de adicionar um endereço no site do Mercado Livre.
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Caso algo não esteja de acordo mande um email para mim guilherme.goncalves01@hotmail.com e eu ajudarei.
